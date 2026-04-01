@@ -11,6 +11,6 @@ public class helloWorld {
 
         System.out.println("Test");
 
-
+        System.out.println("Nytt test");
     }
 }
