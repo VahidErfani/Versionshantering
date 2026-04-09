@@ -29,7 +29,6 @@ public class SupporterStepDefs {
 
     @When("jag fyller i alla mina personuppgifter korrekt")
     public void jag_fyller_i_alla_mina_personuppgifter_korrekt() {
-
         driver.findElement(By.cssSelector(".custom-date")).sendKeys("13051994");
         driver.findElement(By.cssSelector("#member_firstname")).sendKeys("Vahid");
         driver.findElement(By.cssSelector("#member_lastname")).sendKeys("Erfani");
@@ -42,7 +41,6 @@ public class SupporterStepDefs {
 
     @And("jag godkänner alla villkor")
     public void jag_godkänner_alla_villkor() {
-
         driver.findElement(By.cssSelector("label[for='sign_up_25']")).click();
         driver.findElement(By.cssSelector("label[for='sign_up_26']")).click();
         driver.findElement(By.cssSelector("label[for='fanmembersignup_agreetocodeofethicsandconduct']")).click();
@@ -50,29 +48,24 @@ public class SupporterStepDefs {
     }
 
     @And("jag klickar på knappen för att gå med")
-    public void jag_klickar_på_knappen_för_att_gå_med() throws InterruptedException {
-
+    public void jag_klickar_på_knappen_för_att_gå_med() {
         driver.findElement(By.cssSelector(".btn-big")).click();
-
-        Thread.sleep(2000);
 
     }
 
-    @Then("ska jag få se en bekräftelse")
-    public void ska_jag_få_se_en_bekräftelse() {
+    @Then("ska jag få se en bekräftelse {string}")
+    public void ska_jag_få_se_en_bekräftelse(String bekraftelse) {
+        WebElement element = driver.findElement(By.cssSelector("h5.bold"));
 
-        WebElement bekraftelseElement = driver.findElement(By.cssSelector("h5.bold"));
-
-        String actual = bekraftelseElement.getText();
-
-        String expected = "Your Basketball England Membership Number is:";
+        String actual = element.getText();
+        String expected = bekraftelse;
 
         Assert.assertEquals(actual, expected);
+
     }
 
     @When("jag fyller i allt förutom efternamn")
     public void jag_fyller_i_allt_förutom_efternamn() {
-
         driver.findElement(By.cssSelector(".custom-date")).sendKeys("13051994");
         driver.findElement(By.cssSelector("#member_firstname")).sendKeys("Vahid");
         driver.findElement(By.cssSelector("#member_lastname")).clear();
@@ -84,8 +77,7 @@ public class SupporterStepDefs {
     }
 
     @When("jag fyller i allt korrekt men med olika lösenord {string} och {string}")
-    public void jag_fyller_i_allt_korrekt_men_med_olika_lösenord(String pw1, String pw2) throws InterruptedException {
-
+    public void jag_fyller_i_allt_korrekt_men_med_olika_lösenord(String pw1, String pw2) {
         driver.findElement(By.cssSelector(".custom-date")).sendKeys("13051994");
         driver.findElement(By.cssSelector("#member_firstname")).sendKeys("Vahid");
         driver.findElement(By.cssSelector("#member_lastname")).sendKeys("Erfani");
@@ -94,28 +86,23 @@ public class SupporterStepDefs {
         driver.findElement(By.cssSelector("[name='Password']")).sendKeys(pw1);
         driver.findElement(By.cssSelector("[name='ConfirmPassword']")).sendKeys(pw2);
 
-
-        Thread.sleep(2000);
-
     }
 
     @Then("ska jag se ett felmeddelande som säger {string}")
     public void ska_jag_se_ett_felmeddelande_som_säger(String felMeddelande) {
+        vantaPaElement(By.cssSelector(".field-validation-error"));
 
-       vantaPaElement(By.cssSelector(".field-validation-error"));
+        WebElement element = driver.findElement(By.cssSelector(".field-validation-error"));
 
-       WebElement element = driver.findElement(By.cssSelector(".field-validation-error"));
-
-       String actual = element.getText();
-
+        String actual = element.getText();
         String expected = felMeddelande;
 
         Assert.assertEquals(actual, expected);
+
     }
 
     @And("jag godkänner alla villkor förutom terms and condition")
     public void jag_godkänner_alla_villkor_förutom_terms_and_condition() {
-
         driver.findElement(By.cssSelector("label[for='sign_up_26']")).click();
         driver.findElement(By.cssSelector("label[for='fanmembersignup_agreetocodeofethicsandconduct']")).click();
 
@@ -130,13 +117,15 @@ public class SupporterStepDefs {
         } else if (browser.equalsIgnoreCase("firefox")) {
             driver = new FirefoxDriver();
         }
-
         driver.get("file:///C:/Users/Erfani/Documents/Skola/Register.html");
+
     }
 
-        private void vantaPaElement(By locator) {
+
+    private void vantaPaElement(By locator) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+
     }
 
 }

@@ -6,7 +6,7 @@ Feature: Registrera ny supporter
     When jag fyller i alla mina personuppgifter korrekt
     And jag godkänner alla villkor
     And jag klickar på knappen för att gå med
-    Then ska jag få se en bekräftelse
+    Then ska jag få se en bekräftelse "Your Basketball England Membership Number is:"
 
   Scenario: Efternamn saknas
 
@@ -41,7 +41,7 @@ Feature: Registrera ny supporter
     When jag fyller i alla mina personuppgifter korrekt
     And jag godkänner alla villkor
     And jag klickar på knappen för att gå med
-    Then ska jag få se en bekräftelse
+    Then ska jag få se en bekräftelse "Your Basketball England Membership Number is:"
 
 
 
