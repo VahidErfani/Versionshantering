@@ -41,10 +41,7 @@ Feature: Registrera ny supporter
     When jag fyller i alla mina personuppgifter korrekt
     And jag godkänner alla villkor
     And jag klickar på knappen för att gå med
-    Then ska jag få se en bekräftelse "Your Basketball England Membership Number is:"
-
-
-
+    Then ska jag få en bekräftelse "Your Basketball England Membership Number is:"
 
 
     Examples:
@@ -52,3 +49,21 @@ Feature: Registrera ny supporter
       | chrome     |
       | edge       |
       | firefox    |
+
+
+  Scenario Outline: Bonus
+
+    Given jag öppnar registreringssidan i "<webblasare>"
+    When jag fyller i pnr "<pnr>", förnamn "<namn>", efternamn "<enamn>", epost "<epost>", epost2 "<epost2>", lösen "<losen>" och lösen2 "<losen2>"
+    And jag godkänner alla "<villkor>"
+    And jag klickar på knappen för att gå med
+    Then ska jag få en "<bekräftelse>"
+
+
+
+    Examples:
+
+      | webblasare | pnr      | namn  | enamn  | epost             | epost2            | losen  | losen2 | villkor   | bekräftelse                                   |
+      | chrome     | 13051994 | Vahid | Erfani | vahid@hotmail.com | vahid@hotmail.com | okej55 | okej55 | godkänner | Your Basketball England Membership Number is: |
+      | edge       | 13051994 | Vahid | Erfani | vahid@hotmail.com | vahid@hotmail.com | okej55 | okej55 | godkänner | Your Basketball England Membership Number is: |
+

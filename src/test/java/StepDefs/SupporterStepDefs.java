@@ -53,8 +53,8 @@ public class SupporterStepDefs {
 
     }
 
-    @Then("ska jag få se en bekräftelse {string}")
-    public void ska_jag_få_se_en_bekräftelse(String bekraftelse) {
+    @Then("ska jag få en bekräftelse {string}")
+    public void ska_jag_få_en_bekräftelse(String bekraftelse) {
         WebElement element = driver.findElement(By.cssSelector("h5.bold"));
 
         String actual = element.getText();
@@ -101,7 +101,12 @@ public class SupporterStepDefs {
 
     }
 
-    @And("jag godkänner alla villkor förutom terms and condition")
+    private void vantaPaElement(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+        @And("jag godkänner alla villkor förutom terms and condition")
     public void jag_godkänner_alla_villkor_förutom_terms_and_condition() {
         driver.findElement(By.cssSelector("label[for='sign_up_26']")).click();
         driver.findElement(By.cssSelector("label[for='fanmembersignup_agreetocodeofethicsandconduct']")).click();
@@ -110,6 +115,7 @@ public class SupporterStepDefs {
 
     @Given("jag öppnar registreringssidan i {string}")
     public void jag_öppnar_registreringssidan_i(String browser) {
+
         if (browser.equalsIgnoreCase("chrome")) {
             driver = new ChromeDriver();
         } else if (browser.equalsIgnoreCase("edge")) {
@@ -118,13 +124,39 @@ public class SupporterStepDefs {
             driver = new FirefoxDriver();
         }
         driver.get("file:///C:/Users/Erfani/Documents/Skola/Register.html");
+    }
+
+    @When("jag fyller i pnr {string}, förnamn {string}, efternamn {string}, epost {string}, epost2 {string}, lösen {string} och lösen2 {string}")
+    public void jag_fyller_i_allt(String pnr, String namn, String enamn, String epost, String epost2, String losen, String losen2) {
+        driver.findElement(By.cssSelector(".custom-date")).sendKeys(pnr);
+        driver.findElement(By.cssSelector("#member_firstname")).sendKeys(namn);
+        driver.findElement(By.cssSelector("#member_lastname")).sendKeys(enamn);
+        driver.findElement(By.cssSelector("#member_emailaddress")).sendKeys(epost);
+        driver.findElement(By.cssSelector("[name='ConfirmEmailAddress']")).sendKeys(epost2);
+        driver.findElement(By.cssSelector("[name='Password']")).sendKeys(losen);
+        driver.findElement(By.cssSelector("[name='ConfirmPassword']")).sendKeys(losen2);
+
 
     }
 
+    @And ("jag godkänner alla {string}")
+    public void jag_godkänner_alla(String villkor) {
 
-    private void vantaPaElement(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        if (villkor.equalsIgnoreCase("godkänner")) {
+            driver.findElement(By.cssSelector("label[for='sign_up_25']")).click();
+            driver.findElement(By.cssSelector("label[for='sign_up_26']")).click();
+            driver.findElement(By.cssSelector("label[for='fanmembersignup_agreetocodeofethicsandconduct']")).click();
+        }
+    }
+
+    @Then ("ska jag få en {string}")
+    public void ska_jag_få_en(String bekräftelse) {
+        WebElement element = driver.findElement(By.cssSelector("h5.bold"));
+
+        String actual = element.getText();
+        String expected = bekräftelse;
+
+        Assert.assertEquals(actual, expected);
 
     }
 
