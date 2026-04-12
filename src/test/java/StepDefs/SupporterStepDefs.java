@@ -146,7 +146,10 @@ public class SupporterStepDefs {
             driver.findElement(By.cssSelector("label[for='sign_up_25']")).click();
             driver.findElement(By.cssSelector("label[for='sign_up_26']")).click();
             driver.findElement(By.cssSelector("label[for='fanmembersignup_agreetocodeofethicsandconduct']")).click();
+        } else {
+            System.out.println("Fel, du skrev " + villkor);
         }
+
     }
 
     @Then ("ska jag få en {string}")
